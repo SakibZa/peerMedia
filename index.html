@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coupon Wheel</title>
+    <style>
+        /* CSS styles for the coupon wheel */
+        #wheel {
+            width: 200px;
+            height: 200px;
+            background-color: yellow;
+            border-radius: 50%;
+            margin: 50px auto;
+            position: relative;
+            transition: transform 3s ease-in-out;
+        }
+
+        #wheel::after {
+            content: "";
+            position: absolute;
+            top: calc(50% - 5px);
+            left: calc(50% - 1px);
+            width: 2px;
+            height: 10px;
+            background-color: black;
+            transform-origin: bottom center;
+            transition: transform 3s ease-in-out;
+        }
+
+        #spin-button {
+            display: block;
+            width: 100px;
+            height: 40px;
+            margin: 20px auto;
+            background-color: #0099ff;
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* CSS styles to hide the coupon */
+        #coupon {
+            display: none;
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wheel"></div>
+    <button id="spin-button" onclick="spinWheel()">Spin</button>
+    <div id="coupon"></div>
+
+    <script>
+        var spinCount = 0;
+        var isSpinning = false;
+
+        function spinWheel() {
+            if (isSpinning) {
+                return;
+            }
+
+            isSpinning = true;
+            spinCount++;
+
+            var wheel = document.getElementById("wheel");
+            var couponElement = document.getElementById("coupon");
+
+            wheel.style.transform = "rotate(" + (360 * spinCount) + "deg)";
+
+            if (spinCount === 1) {
+                // First spin
+                setTimeout(function() {
+                    isSpinning = false;
+                    couponElement.innerText = "Try Again";
+                    couponElement.style.display = "block";
+                }, 3000);
+            } else if (spinCount === 2) {
+                // Second spin
+                setTimeout(function() {
+                    isSpinning = false;
+                    var couponCode = generateCouponCode(); // Replace with your logic to generate a coupon code
+                    couponElement.innerText = "Congratulations! Your coupon code is: " + couponCode;
+                    couponElement.style.display = "block";
+                }, 3000);
+            }
+        }
+
+        function generateCouponCode() {
+            // Replace this with your own code to generate a unique coupon code
+            return "ABC123";
+        }
+    </script>
+</body>
+</html>
